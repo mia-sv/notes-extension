@@ -14,35 +14,20 @@ if (leadsFromLocalStorage) {
 
 // Function to render all posts
 function render() {
-  let postsHTML = '';
-
-  for (let i = 0; i < posts.length; i++) {
-    const text = posts[i].text;
-
-    if ('url' in posts[i] && 'text' in posts[i]) {
-      postsHTML += `
-            <li>
-                <a target='_blank' href='${posts[i].url}'>
-                    ${posts[i].text}
-                </a>
-            </li>
-        `;
-    } else if ('text' in posts[i]) {
-      postsHTML += `<li>${posts[i].text}</li>`;
-    } else {
-      postsHTML += `
-                <li>
-                    <a target='_blank' href='${posts[i].url}'>
-                        ${posts[i].url} 
-                    </a>
-                </li>
-            `;
-    }
-  }
-
-  
-
-  ulEl.innerHTML = postsHTML;
+  ulEl.innerHTML = posts
+    .map((post) => ({
+      ...post,
+      html:
+        'url' in post
+          ? `<a target='_blank' href='${post.url}'>${post.text}</a>`
+          : post.text,
+    }))
+    .map((post) => ({
+      ...post,
+      html: `${post.html}<button id="delete-btn" onclick="deletePost(${post.id})">Delete</button>`,
+    }))
+    .map((post) => `<li>${post.html}</li>`)
+    .reduce((acc, curr) => acc + curr, '');
 }
 
 // Event listeners ---------------------------
@@ -64,11 +49,11 @@ saveTabBtn.addEventListener('click', () => {
     .then((url) => {
       const text = inputEl.value.trim();
 
-      if (text.length != 0) {
-        posts.push({ text: inputEl.value, url: url });
-      } else {
-        posts.push({ url: url });
-      }
+      posts.push({
+        text: text.length != 0 ? text : url,
+        url: url,
+        id: generateRandom(),
+      });
 
       inputEl.value = '';
       localStorage.setItem('posts', JSON.stringify(posts));
@@ -80,9 +65,17 @@ saveBtn.addEventListener('click', () => {
   const text = inputEl.value.trim();
 
   if (text.length != 0) {
-    posts.push({ text: text });
+    posts.push({ text: text, id: generateRandom() });
     inputEl.value = '';
     localStorage.setItem('posts', JSON.stringify(posts));
     render();
   }
 });
+
+const generateRandom = () => Math.floor(Math.random() * 9999999);
+
+const deletePost = (id) => {
+  posts = posts.filter((post) => post.id != id);
+  localStorage.setItem('posts', JSON.stringify(posts));
+  render();
+};
