@@ -24,13 +24,16 @@ function render() {
     }))
     .map((post) => ({
       ...post,
-      html: `${post.html}<span class="post-date">${post.date}</span>`,
+      html: `<div class="post-body">
+                <span class="post-text">${post.html}</span>
+                <span class="post-date">${post.date}</span>
+             </div>`,
     }))
     .map((post) => ({
       ...post,
       html: `${post.html}<button class="delete-btn" onclick="deletePost(${post.id})">Delete</button>`,
     }))
-    .map((post) => `<li>${post.html}</li>`)
+    .map((post) => ` <li class="post">${post.html}</li>`)
     .reduce((acc, curr) => acc + curr, '');
 }
 
