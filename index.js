@@ -14,27 +14,47 @@ if (leadsFromLocalStorage) {
 
 // Function to render all posts
 function render() {
-  ulEl.innerHTML = posts
-    .map((post) => ({
-      ...post,
-      html:
-        'url' in post
-          ? `<a target='_blank' href='${post.url}'>${post.text}</a>`
-          : post.text,
-    }))
-    .map((post) => ({
-      ...post,
-      html: `<div class="post-body">
-                <span class="post-text">${post.html}</span>
-                <span class="post-date">${post.date}</span>
-             </div>`,
-    }))
-    .map((post) => ({
-      ...post,
-      html: `${post.html}<button class="delete-btn" onclick="deletePost(${post.id})">Delete</button>`,
-    }))
-    .map((post) => ` <li class="post">${post.html}</li>`)
-    .reduce((acc, curr) => acc + curr, '');
+  ulEl.replaceChildren(
+    ...posts.map((post) => {
+      // Create the base li element for each post
+      const postHtml = document.createElement('li');
+      postHtml.classList.add('post');
+
+      // Create the post body for each post
+      const postBody = document.createElement('div');
+      postBody.classList.add('post-body');
+      postHtml.appendChild(postBody);
+
+      // Create and add to the post body the test section for the post
+      if ('url' in post) {
+        const postTextWithLink = document.createElement('a');
+        postTextWithLink.appendChild(document.createTextNode(post.text));
+        postTextWithLink.target = '_blank';
+        postTextWithLink.href = post.url;
+
+        postBody.appendChild(postTextWithLink);
+      } else {
+        postBody.appendChild(document.createTextNode(post.text));
+      }
+
+      // Create the post date element and append it to the post body
+      const postDate = document.createElement('span');
+      postDate.classList.add('post-date');
+      postDate.appendChild(document.createTextNode(post.date));
+      postBody.appendChild(postDate);
+
+      // Create the delete button and append it to the post body
+      const postDeleteBtn = document.createElement('button');
+      postDeleteBtn.classList.add('delete-btn');
+      postDeleteBtn.appendChild(document.createTextNode('Delete'));
+
+      // Add delete listener for each button
+      postDeleteBtn.addEventListener('click', () => deletePost(post.id));
+      postBody.appendChild(postDeleteBtn);
+
+      return postHtml;
+    })
+  );
 }
 
 // Event listeners ---------------------------
