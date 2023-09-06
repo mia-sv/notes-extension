@@ -44,6 +44,7 @@ button:active {
   background: white;
   color: #0077b6;
   padding: 6px 16px;
+  float: right;
 }
 
 .delete-btn:hover {
@@ -64,6 +65,7 @@ button:active {
   color: darkgrey;
   float: right;
   width: 15%;
+  float: inline-start;
 }
 
 .post-text {
