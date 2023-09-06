@@ -75,13 +75,14 @@ saveTabBtn.addEventListener('click', () => {
     })
     .then((url) => {
       const text = inputEl.value.trim();
-
-      posts.push({
+      const newPost = {
         text: text.length != 0 ? text : url,
         url: url,
         id: generateRandom(),
         date: currentDate(),
-      });
+      };
+
+      posts = [newPost, ...posts];
 
       inputEl.value = '';
       localStorage.setItem('posts', JSON.stringify(posts));
@@ -93,11 +94,14 @@ saveBtn.addEventListener('click', () => {
   const text = inputEl.value.trim();
 
   if (text.length != 0) {
-    posts.push({
+    const newPost = {
       text: text,
       id: generateRandom(),
       date: currentDate(),
-    });
+    };
+
+    posts = [newPost, ...posts];
+
     inputEl.value = '';
     localStorage.setItem('posts', JSON.stringify(posts));
     render();
@@ -117,8 +121,8 @@ const currentDate = () => {
 
   const h = date.getHours().toString().padStart(2, '0');
   const m = date.getMinutes().toString().padStart(2, '0');
-  const d = date.getDay().toString().padStart(2, '0');
-  const M = date.getMonth().toString().padStart(2, '0');
+  const d = date.getDate().toString().padStart(2, '0');
+  const M = (date.getMonth() + 1).toString().padStart(2, '0');
   const y = date.getFullYear();
 
   return `${h}:${m} ${d}/${M}/${y}`;
