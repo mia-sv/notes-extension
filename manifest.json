@@ -1,12 +1,10 @@
 {
-    "manifest_version": 3,
-    "version": "1.0",
-    "name": "Notes Extension",
-    "action": {
-        "default_popup": "index.html",
-        "default_icon": "icon.png"
-    },
-    "permissions": [
-        "tabs"
-    ]
+  "manifest_version": 3,
+  "version": "1.0",
+  "name": "Notes Extension",
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": "img/icon.png"
+  },
+  "permissions": ["tabs"]
 }
