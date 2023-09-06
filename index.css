@@ -11,7 +11,7 @@ body {
 }
 
 #input-el {
-  width: 400px;
+  width: 360px;
   padding: 10px;
   box-sizing: border-box;
   border: 1px solid #0077b6;
@@ -63,13 +63,9 @@ button:active {
 .post-date {
   font-size: 14px;
   color: darkgrey;
-  float: right;
-  width: 15%;
   float: inline-start;
-}
-
-.post-text {
-  width: 80%;
+  padding-right: 10px;
+  width: 70px;
 }
 
 ul {
@@ -100,5 +96,3 @@ a {
   height: 13px;
   text-align: center;
 }
-
-

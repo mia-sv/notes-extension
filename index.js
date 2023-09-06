@@ -25,7 +25,13 @@ function render() {
       postBody.classList.add('post-body');
       postHtml.appendChild(postBody);
 
-      // Create and add to the post body the test section for the post
+      // Create the post date element and append it to the post body
+      const postDate = document.createElement('span');
+      postDate.classList.add('post-date');
+      postDate.appendChild(document.createTextNode(post.date));
+      postBody.appendChild(postDate);
+
+      // Create and add to the post body the text section for the post
       if ('url' in post) {
         const postTextWithLink = document.createElement('a');
         postTextWithLink.appendChild(document.createTextNode(post.text));
@@ -36,12 +42,6 @@ function render() {
       } else {
         postBody.appendChild(document.createTextNode(post.text));
       }
-
-      // Create the post date element and append it to the post body
-      const postDate = document.createElement('span');
-      postDate.classList.add('post-date');
-      postDate.appendChild(document.createTextNode(post.date));
-      postBody.appendChild(postDate);
 
       // Create the delete button and append it to the post body
       const postDeleteBtn = document.createElement('button');
@@ -123,7 +123,7 @@ const currentDate = () => {
   const m = date.getMinutes().toString().padStart(2, '0');
   const d = date.getDate().toString().padStart(2, '0');
   const M = (date.getMonth() + 1).toString().padStart(2, '0');
-  const y = date.getFullYear();
+  const y = date.getFullYear() - 2000;
 
   return `${h}:${m} ${d}/${M}/${y}`;
 };
