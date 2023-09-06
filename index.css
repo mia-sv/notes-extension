@@ -2,7 +2,7 @@ body {
   margin: 0;
   padding: 10px;
   font-family: 'Ubuntu', sans-serif;
-  min-width: 400px;
+  min-width: 650px;
 }
 
 @font-face {
@@ -43,8 +43,8 @@ button:active {
 .delete-btn {
   background: white;
   color: #0077b6;
-  padding: 6px 16px;
-  float: right;
+  padding: 10px 20px;
+  align-self: flex-end;
 }
 
 .delete-btn:hover {
@@ -53,31 +53,30 @@ button:active {
 }
 
 .post-body {
-  width: 600px;
-  background-color: #fafafa;
-  margin: 5px;
-  padding: 6px;
   color: #141b41;
+  display: flex;
 }
 
 .post-date {
   font-size: 14px;
   color: darkgrey;
-  float: inline-start;
-  padding-right: 10px;
+  padding-right: 15px;
   width: 70px;
 }
 
-ul {
-  margin-top: 20px;
+#ul-el {
   list-style: none;
   padding-left: 0;
 }
 
 .post {
   display: flex;
-  align-items: center;
-  width: 650px;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #fafafa;
+  margin:  5px 0;
+  padding: 10px;
+  width: 600px;
 }
 
 a {

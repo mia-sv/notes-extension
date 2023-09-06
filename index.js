@@ -26,10 +26,14 @@ function render() {
       postHtml.appendChild(postBody);
 
       // Create the post date element and append it to the post body
-      const postDate = document.createElement('span');
+      const postDate = document.createElement('div');
       postDate.classList.add('post-date');
       postDate.appendChild(document.createTextNode(post.date));
       postBody.appendChild(postDate);
+
+      // Create div with post text
+      const postText = document.createElement('div');
+      postText.classList.add('post-text');
 
       // Create and add to the post body the text section for the post
       if ('url' in post) {
@@ -38,19 +42,21 @@ function render() {
         postTextWithLink.target = '_blank';
         postTextWithLink.href = post.url;
 
-        postBody.appendChild(postTextWithLink);
+        postText.appendChild(postTextWithLink);
       } else {
-        postBody.appendChild(document.createTextNode(post.text));
+        postText.appendChild(document.createTextNode(post.text));
       }
+
+      postBody.appendChild(postText);
 
       // Create the delete button and append it to the post body
       const postDeleteBtn = document.createElement('button');
       postDeleteBtn.classList.add('delete-btn');
       postDeleteBtn.appendChild(document.createTextNode('Delete'));
 
-      // Add delete listener for each button
+      // Add delete listener for each button and append button
       postDeleteBtn.addEventListener('click', () => deletePost(post.id));
-      postBody.appendChild(postDeleteBtn);
+      postHtml.appendChild(postDeleteBtn);
 
       return postHtml;
     })
